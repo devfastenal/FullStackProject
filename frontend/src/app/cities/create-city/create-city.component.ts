@@ -107,8 +107,7 @@ export class CreateCityComponent implements OnInit,AfterViewInit{
           });
         },
         reject: (type) => {
-          this.temp=this.service.getCity(this.id);
-          this.tempform.setValue({cityName:this.temp.cityName,state:this.temp.state,country:this.temp.country,currency:this.temp.currency});
+          
           
             switch(type) {
                 case ConfirmEventType.REJECT:

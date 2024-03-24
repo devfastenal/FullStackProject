@@ -16,5 +16,11 @@ export class CitiesListComponent implements OnInit {
   ngOnInit(){
     this.cityservice.refreshList();
   }
- 
+  isActive(cityId: number): boolean {
+    const currentUrl = this.router.url;
+    const urlSegments = currentUrl.split('/'); 
+    const routeId = urlSegments.find(segment => !isNaN(parseInt(segment))); 
+    return routeId && parseInt(routeId) === cityId;
+}
+
 }
