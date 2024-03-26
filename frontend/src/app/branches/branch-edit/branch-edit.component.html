@@ -75,7 +75,7 @@
                                 <input type="number" id="latitude"
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"
                                     ngModel name="latitude" required min="-90" max="90"
-                                    [style]="{'width': '145%', 'height': '7vh !important'}">
+                                    [style]="{'width': '145%', 'height': '7vh !important'}" placeholder="-90 to 90">
                             </div>
                             <div class="field" *ngIf="!editMode"
                                 style="display: flex; flex-direction: column; gap: 1px;">
@@ -83,7 +83,7 @@
                                 <input type="number" id="longitude"
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"
                                     ngModel name="longitude" required min="-180" max="180"
-                                    [style]="{'width': '135%', 'height': '7vh !important'}">
+                                    [style]="{'width': '135%', 'height': '7vh !important'}" placeholder="-180 to 180">
                             </div>
                         </div>
                     </p-scrollPanel>

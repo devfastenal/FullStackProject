@@ -44,6 +44,7 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
     }
   }
   onSubmit(form: NgForm) {
+    form.value.cityName = form.value.cityName.toUpperCase();
     if (this.editMode) {
       this.confirmationService.confirm({
         message: 'Are you sure that you want to Update?',
@@ -58,6 +59,7 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
                   tempCity[controlName] = form.controls[controlName].value;
                 }
               }
+              tempCity['cityName'] = tempCity['cityName'].toUpperCase();
               const index = this.service.list.findIndex(x => x.cityId === this.id);
               this.service.list[index] = tempCity;
               this.appservice.updateToast();

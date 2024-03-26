@@ -1,5 +1,5 @@
 <div class="grid">
-
+    <div class="col-4 col-offset-4" style="margin-top: 10%;" *ngIf="!branch">No such branch exists</div>
     <div class="col-11 col-offset-1" *ngIf="branch">
         <p-card header="BU Code: {{branch.buCode | uppercase}}">
             <table style="width: 100%; text-align: center;">

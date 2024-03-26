@@ -32,6 +32,7 @@ export class CitiesService {
                 tempCity[controlName] = form.controls[controlName].value;
             }
         }
+        tempCity['cityName'] = tempCity['cityName'].toUpperCase();
         // this.http.put(this.url+'/'+id,tempCity).subscribe({
         //     error: error => {
         //         this.bool=true;

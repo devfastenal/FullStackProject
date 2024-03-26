@@ -34,7 +34,8 @@ const routes: Routes = [
       { path: ':id/edit', component: CreateCityComponent },
     ]
   },
-  { path: 'auth', component: AuthComponent }
+  { path: 'auth', component: AuthComponent },
+  { path: '**', redirectTo: 'branches' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
