@@ -17,7 +17,7 @@ p-tabmenu {
 }
 
 ::ng-deep .p-tabmenu .p-tabmenu-nav li.p-highlight a {
-  color: rgb(38, 36, 36);
+  color: aqua;
 }
 
 ::ng-deep .p-tabmenu .p-tabmenu-nav li.p-highlight a {

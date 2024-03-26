@@ -45,8 +45,8 @@
                     <!-- <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
                         rejectButtonStyleClass="p-button-text"></p-confirmDialog> -->
 
-                    <button type="button" [disabled]="!form.valid" pButton pRipple class="p-button-success mb-2"
-                        (click)="onSubmit(form)">{{editMode? "Update" :"Add"}}</button>
+                    <p-button type="button" [disabled]="!form.valid" (click)="onSubmit(form)">{{editMode? "Update"
+                        :"Add"}}</p-button>
                 </div>
                 <div class="col-6">
                     <p-button severity="danger" routerLink="../">Discard</p-button>
