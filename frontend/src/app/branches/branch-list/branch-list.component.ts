@@ -21,4 +21,11 @@ export class BranchListComponent {
       return false;
     return true;
   }
+
+  isStatusClose(status: string): boolean {
+    if (status === "Close") {
+      return true;
+    }
+    return false;
+  }
 }

@@ -23,10 +23,6 @@ export class BranchService {
         return this.http.post('https://localhost:7207/api/Branches', branch);
     }
 
-    deleteBranch(Id: number) {
-        return this.http.delete('https://localhost:7207/api/Branches/' + Id);
-    }
-
     updateBranch(Id: number, code: string, businessHours: string, form: NgForm) {
         return this.http.put('https://localhost:7207/api/Branches/' + Id, {
             id: Id,

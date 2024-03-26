@@ -8,8 +8,16 @@
                 </p>
             </p-fieldset>
         </div>
-        <div *ngIf="!isActive(branch.buCode)">
+        <div *ngIf="!isActive(branch.buCode) && !isStatusClose(branch.status)">
             <p-fieldset legend="{{id+1}}" [routerLink]="[branch.buCode]" [style]="{ cursor: 'pointer' }">
+                <p class="m-0">
+                    <b>BU Code</b> : {{branch.buCode | uppercase}}
+                </p>
+            </p-fieldset>
+        </div>
+        <div *ngIf="!isActive(branch.buCode) && isStatusClose(branch.status)">
+            <p-fieldset legend="{{id+1}}" [routerLink]="[branch.buCode]" styleClass="notActive"
+                [style]="{ cursor: 'pointer' }">
                 <p class="m-0">
                     <b>BU Code</b> : {{branch.buCode | uppercase}}
                 </p>

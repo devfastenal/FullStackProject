@@ -32,12 +32,14 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
     this.activeroute.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.editMode = params['id'] != null;
+      if (this.editMode) {
+        this.city = this.service.getCity(this.id);
+      }
     });
     this.primengConfig.ripple = true;
   }
   ngAfterViewInit(): void {
     if (this.editMode) {
-      this.city = this.service.getCity(this.id);
       Promise.resolve().then(() => {
         this.tempform.setValue({ cityName: this.city.cityName, state: this.city.state, country: this.city.country, currency: this.city.currency });
       })

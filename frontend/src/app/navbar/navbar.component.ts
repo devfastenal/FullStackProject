@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ];
   sub: Subscription;
   user: any;
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private appService: AppComponent, private confirmationService: ConfirmationService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.sub = this.authService.user.subscribe(user => {
@@ -43,6 +44,24 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
   onLogout() {
-    this.authService.logout();
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to log out?',
+      header: 'Confirm Logout',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.authService.logout();
+      },
+      reject: (type) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.appService.rejected();
+
+            break;
+          case ConfirmEventType.CANCEL:
+            this.appService.cancelled();
+            break;
+        }
+      }
+    });
   }
 }

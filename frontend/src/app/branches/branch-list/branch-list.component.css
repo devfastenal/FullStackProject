@@ -4,3 +4,10 @@
         color: white;
     }
 }
+
+:host {
+    ::ng-deep .notActive {
+        background-color: rgb(156, 158, 162);
+        color: white;
+    }
+}

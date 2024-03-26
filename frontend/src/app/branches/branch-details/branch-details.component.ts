@@ -49,42 +49,4 @@ export class BranchDetailsComponent implements OnInit {
       this.businessHours += time;
     })
   }
-
-  onDelete() {
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to delete this data?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.branchService.deleteBranch(this.branch.id).subscribe({
-          next: res => {
-            this.appService.deletedToast();
-            this.branchService.loadBranches().subscribe({
-              next: res => {
-                this.branchService.branches = res;
-              }
-            });
-            this.router.navigate(['branches']);
-          }, error: err => {
-            if (err.status === 403) {
-              this.appService.customError('You are not an admin');
-            }
-            else {
-              this.appService.customError('Something went wrong');
-            }
-          }
-        })
-      },
-      reject: (type) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.appService.rejected();
-            break;
-          case ConfirmEventType.CANCEL:
-            this.appService.cancelled();
-            break;
-        }
-      }
-    });
-  }
 }
