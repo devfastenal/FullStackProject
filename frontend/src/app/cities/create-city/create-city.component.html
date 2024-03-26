@@ -1,6 +1,6 @@
 <div class="grid">
-    <div class="col-8 col-offset-2">
-
+    <div class="col-5 col-offset-4" *ngIf="editMode && !city">Could not fetch city details</div>
+    <div class="col-8 col-offset-2" *ngIf="!editMode || (editMode && city)">
         <p-card>
             <p-panel header="{{editMode ? 'Edit' : 'Add'}} City Details">
                 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
