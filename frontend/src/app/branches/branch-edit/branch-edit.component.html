@@ -77,6 +77,10 @@
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"
                                     ngModel name="latitude" required min="-90" max="90"
                                     [style]="{'width': '145%', 'height': '7vh !important'}" placeholder="-90 to 90">
+                                <div style="width:7vw; font-size: xx-small; color: red;"
+                                    *ngIf="form.form.controls.latitude?.errors?.min || form.form.controls.latitude?.errors?.max">
+                                    Latitude must be between -90 and 90.
+                                </div>
                             </div>
                             <div class="field" *ngIf="!editMode"
                                 style="display: flex; flex-direction: column; gap: 1px;">
@@ -85,6 +89,10 @@
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"
                                     ngModel name="longitude" required min="-180" max="180"
                                     [style]="{'width': '135%', 'height': '7vh !important'}" placeholder="-180 to 180">
+                                <div style="width:7vw; font-size: xx-small; color: red;"
+                                    *ngIf="form.form.controls.longitude?.errors?.min || form.form.controls.longitude?.errors?.max">
+                                    Longitude must be between -180 and 180.
+                                </div>
                             </div>
                         </div>
                     </p-scrollPanel>
