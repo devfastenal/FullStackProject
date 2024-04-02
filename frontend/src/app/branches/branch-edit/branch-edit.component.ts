@@ -113,6 +113,15 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
               this.branchService.loadBranches().subscribe({
                 next: res => {
                   this.branchService.branches = res;
+                  this.branchService.branches.sort((a, b) => {
+                    if (a.buCode > b.buCode) {
+                      return 1;
+                    } else if (a.buCode < b.buCode) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  });
                 }
               });
               var index = this.branchService.branches.findIndex(q => q.buCode == this.branch.buCode);
@@ -170,7 +179,7 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
             return;
           }
           const branch: CreateBranch = new CreateBranch(
-            this.branchForm.value.buCode,
+            this.branchForm.value.buCode.toUpperCase(),
             this.branchForm.value.status,
             this.branchForm.value.openedDate,
             this.branchForm.value.address,
@@ -186,6 +195,15 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
               this.branchService.loadBranches().subscribe({
                 next: res => {
                   this.branchService.branches = res;
+                  this.branchService.branches.sort((a, b) => {
+                    if (a.buCode > b.buCode) {
+                      return 1;
+                    } else if (a.buCode < b.buCode) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  });
                 }
               });
               this.router.navigate(['../'], { relativeTo: this.route });

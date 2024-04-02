@@ -13,16 +13,19 @@ export class BranchWeatherComponent implements OnInit {
   code: string;
   Branch: Branch;
   res = null;
+  isLoading = false;
 
   constructor(private route: ActivatedRoute, private branchService: BranchService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.params.subscribe((params: Params) => {
       this.code = params['id'];
       this.Branch = this.branchService.getBranch(this.code);
       this.http.get('https://localhost:7207/api/Cities/' + this.Branch.cityId + '/weather').subscribe({
         next: res => {
           this.res = res;
+          this.isLoading = false;
         }
       })
     })

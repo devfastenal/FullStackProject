@@ -55,11 +55,13 @@ export class AuthComponent implements OnInit, OnDestroy {
         this.error = null;
         this.appService.customSuccess('Logged In Successfully');
         this.router.navigate(['/branches']);
+        this.isLoading = false;
       }, errorResp => {
         if (errorResp.error.status === 401) {
           this.error = 'Incorrect credentials'
           this.appService.customError(this.error);
         }
+        this.isLoading = false;
       });
     }
     else if (!this.isLoginMode && !this.user) {
@@ -74,6 +76,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.error = null;
           this.appService.customSuccess('Sign up was successful! Please Login to proceed');
           this.isLoginMode = true;
+          this.isLoading = false;
           form.reset();
         }, error: errorRes => {
           this.error = 'Password must contain one uppercase, one lowercase and one non-alphanumeric';
@@ -83,6 +86,7 @@ export class AuthComponent implements OnInit, OnDestroy {
             this.error = 'Internal server error. Please try again later'
 
           this.appService.customError(this.error);
+          this.isLoading = false;
         }
       });
     }
@@ -104,15 +108,16 @@ export class AuthComponent implements OnInit, OnDestroy {
           this.error = null;
           this.router.navigate(['/branches']);
           this.appService.customSuccess('Password Changed Successfully');
+          this.isLoading = false;
         }, error: errorRes => {
           this.error = 'Something went wrong. Make sure you entered correct current password. New Password must contain one uppercase, one lowercase and one non-alphanumeric';
           if (errorRes.status === 500)
             this.error = 'Internal server error. Please try again later'
 
           this.appService.customError(this.error);
+          this.isLoading = false;
         }
       });
     }
-    this.isLoading = false;
   }
 }

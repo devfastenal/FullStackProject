@@ -15,6 +15,15 @@ export class BranchesComponent implements OnInit {
     this.branchSerive.loadBranches().subscribe({
       next: res => {
         this.branchSerive.branches = res;
+        this.branchSerive.branches.sort((a, b) => {
+          if (a.buCode > b.buCode) {
+            return 1;
+          } else if (a.buCode < b.buCode) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
       }
     });
     this.cityService.refreshList().subscribe({

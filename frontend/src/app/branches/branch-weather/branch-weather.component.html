@@ -1,4 +1,7 @@
 <div class="grid">
+    <div *ngIf="isLoading" style="text-align: center;">
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+    </div>
     <div class="col-11 col-offset-1" *ngIf="Branch && res">
         <p-card header="BU Code: {{Branch.buCode | uppercase}}">
             <table style="width: 100%; text-align: center;">
