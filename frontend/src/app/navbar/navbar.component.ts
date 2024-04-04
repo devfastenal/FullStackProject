@@ -50,7 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.authService.logout();
-        this.toastService.customSuccess("Logged Out Succesfully");
+        this.toastService.customSuccess("Logged Out Successfully");
       },
       reject: (type) => {
         switch (type) {
