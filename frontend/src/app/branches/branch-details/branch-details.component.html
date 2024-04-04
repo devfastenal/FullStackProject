@@ -45,12 +45,15 @@
                 </tr>
             </table>
             <br>
-            <div class="grid justify-content-center">
-                <div class="col-5" style="display: flex; justify-content: center;">
+            <div class="grid justify-content-around">
+                <div class="col-3" style="display: flex; justify-content: center;">
                     <p-button label="Edit" routerLink="edit"></p-button>
                 </div>
-                <div class="col-5" style="display: flex; justify-content: center;">
+                <div class="col-4" style="display: flex; justify-content: center;">
                     <p-button label="See Weather" severity="info" routerLink="weather"></p-button>
+                </div>
+                <div class="col-3" style="display: flex; justify-content: center;">
+                    <p-button label="Go back" severity="info" routerLink="../"></p-button>
                 </div>
                 <!-- <div class="col-3" style="display: flex; justify-content: center;">
                     <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"

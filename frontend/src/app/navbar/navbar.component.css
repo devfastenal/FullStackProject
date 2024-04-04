@@ -10,6 +10,7 @@ p-tabmenu {
 ::ng-deep .p-tabmenu .p-tabmenu-nav li a {
   background-color: #00599c;
   color: white;
+  border-color: white;
 }
 
 ::ng-deep .p-tabmenu .p-tabmenu-nav {
@@ -17,12 +18,15 @@ p-tabmenu {
 }
 
 ::ng-deep .p-tabmenu .p-tabmenu-nav li.p-highlight a {
-  color: aqua;
+  background-color: white;
+  color: black;
+  border-color: black;
 }
 
+/* 
 ::ng-deep .p-tabmenu .p-tabmenu-nav li.p-highlight a {
-  border-color: red;
-}
+  border-color: black;
+} */
 
 
 ::ng-deep .LogButton {
@@ -34,6 +38,9 @@ p-tabmenu {
 ::ng-deep .logout {
   background-color: red;
 }
+
+
+@media screen and (max-width: 650px) {}
 
 /* .logout-button:hover {
   color: red !important;
