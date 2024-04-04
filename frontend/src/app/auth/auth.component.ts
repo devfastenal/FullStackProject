@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { AuthService, LoginResponse } from './auth.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { AppComponent } from '../app.component';
+import { ToastService } from '../shared-sources/toast-service';
 
 @Component({
   selector: 'app-auth',
@@ -18,7 +18,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   user = null;
   sub: Subscription;
 
-  constructor(private appService: AppComponent, private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.sub = this.authService.user.subscribe(user => {
@@ -53,13 +53,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     if (this.isLoginMode && !this.user) {
       this.authService.login(form.value.email, form.value.password).subscribe(resData => {
         this.error = null;
-        this.appService.customSuccess('Logged In Successfully');
+        this.toastService.customSuccess('Logged In Successfully');
         this.router.navigate(['/branches']);
         this.isLoading = false;
       }, errorResp => {
         if (errorResp.error.status === 401) {
           this.error = 'Incorrect credentials'
-          this.appService.customError(this.error);
+          this.toastService.customError(this.error);
         }
         this.isLoading = false;
       });
@@ -67,14 +67,14 @@ export class AuthComponent implements OnInit, OnDestroy {
     else if (!this.isLoginMode && !this.user) {
       if (form.value.password !== form.value.confirmPassword) {
         this.error = 'Passwords did not match';
-        this.appService.customError(this.error);
+        this.toastService.customError(this.error);
         this.isLoading = false;
         return;
       }
       this.authService.signup(form.value.email, form.value.password, form.value.firstname, form.value.lastname).subscribe({
         next: resData => {
           this.error = null;
-          this.appService.customSuccess('Sign up was successful! Please Login to proceed');
+          this.toastService.customSuccess('Sign up was successful! Please Login to proceed');
           this.isLoginMode = true;
           this.isLoading = false;
           form.reset();
@@ -85,7 +85,7 @@ export class AuthComponent implements OnInit, OnDestroy {
           if (errorRes.status === 500)
             this.error = 'Internal server error. Please try again later'
 
-          this.appService.customError(this.error);
+          this.toastService.customError(this.error);
           this.isLoading = false;
         }
       });
@@ -93,13 +93,13 @@ export class AuthComponent implements OnInit, OnDestroy {
     else {
       if (form.value.password === form.value.newPassword) {
         this.error = 'Do not enter same password for both the fields. Choose a new password';
-        this.appService.customError(this.error);
+        this.toastService.customError(this.error);
         this.isLoading = false;
         return;
       }
       if (form.value.newPassword !== form.value.confirmNewPassword) {
         this.error = 'Please enter same passoword for Confirm New Passoword field';
-        this.appService.customError(this.error);
+        this.toastService.customError(this.error);
         this.isLoading = false;
         return;
       }
@@ -107,14 +107,14 @@ export class AuthComponent implements OnInit, OnDestroy {
         next: resData => {
           this.error = null;
           this.router.navigate(['/branches']);
-          this.appService.customSuccess('Password Changed Successfully');
+          this.toastService.customSuccess('Password Changed Successfully');
           this.isLoading = false;
         }, error: errorRes => {
           this.error = 'Something went wrong. Make sure you entered correct current password. New Password must contain one uppercase, one lowercase and one non-alphanumeric';
           if (errorRes.status === 500)
             this.error = 'Internal server error. Please try again later'
 
-          this.appService.customError(this.error);
+          this.toastService.customError(this.error);
           this.isLoading = false;
         }
       });

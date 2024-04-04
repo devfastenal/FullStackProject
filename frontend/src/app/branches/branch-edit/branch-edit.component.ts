@@ -4,8 +4,8 @@ import { Branch, CreateBranch } from '../branch.model';
 import { BranchService } from '../branch.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CitiesService } from '../../shared-sources/cities-service';
-import { AppComponent } from '../../app.component';
 import { ConfirmEventType, ConfirmationService } from 'primeng/api';
+import { ToastService } from '../../shared-sources/toast-service';
 
 @Component({
   selector: 'app-branch-edit',
@@ -20,7 +20,7 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
   statusOptions: string[] = ['Open', 'Close', 'Under-Construction'];
   @ViewChild('form') branchForm: NgForm
 
-  constructor(private confirmationService: ConfirmationService, private appService: AppComponent, private branchService: BranchService, private router: Router, private route: ActivatedRoute, public cityService: CitiesService) { }
+  constructor(private confirmationService: ConfirmationService, private toastService: ToastService, private branchService: BranchService, private router: Router, private route: ActivatedRoute, public cityService: CitiesService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -100,16 +100,16 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           if (!this.isValidString(form.value.phone)) {
-            this.appService.customError("Write valid phone number");
+            this.toastService.customError("Write valid phone number");
             return;
           }
           if (!this.isValidTimes(form.value.startTime, form.value.endTime)) {
-            this.appService.customError("Start time should be less than End time");
+            this.toastService.customError("Start time should be less than End time");
             return;
           }
           this.branchService.updateBranch(this.branch.id, this.branch.buCode, businessHours, form).subscribe({
             next: res => {
-              this.appService.updateToast();
+              this.toastService.updateToast();
               this.branchService.loadBranches().subscribe({
                 next: res => {
                   this.branchService.branches = res;
@@ -140,10 +140,10 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
               this.router.navigate(['/branches/' + this.branch.buCode]);
             }, error: err => {
               if (err.status === 400) {
-                this.appService.customError(err.error);
+                this.toastService.customError(err.error);
               }
               else {
-                this.appService.customError('Something went wrong!');
+                this.toastService.customError('Something went wrong!');
               }
             }
           })
@@ -151,10 +151,10 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
         reject: (type) => {
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.appService.rejected();
+              this.toastService.rejected();
               break;
             case ConfirmEventType.CANCEL:
-              this.appService.cancelled();
+              this.toastService.cancelled();
               break;
           }
         }
@@ -167,15 +167,15 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
           if (!this.isValidBuCode(form.value.buCode)) {
-            this.appService.customError("BU Code should only contain alphanumeric values")
+            this.toastService.customError("BU Code should only contain alphanumeric values")
             return;
           }
           if (!this.isValidString(form.value.phone)) {
-            this.appService.customError("Write valid phone number");
+            this.toastService.customError("Write valid phone number");
             return;
           }
           if (!this.isValidTimes(form.value.startTime, form.value.endTime)) {
-            this.appService.customError("Start time should be less than End time");
+            this.toastService.customError("Start time should be less than End time");
             return;
           }
           const branch: CreateBranch = new CreateBranch(
@@ -191,7 +191,7 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
           );
           this.branchService.addBranch(branch).subscribe({
             next: res => {
-              this.appService.addedToast();
+              this.toastService.addedToast();
               this.branchService.loadBranches().subscribe({
                 next: res => {
                   this.branchService.branches = res;
@@ -209,10 +209,10 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
               this.router.navigate(['../'], { relativeTo: this.route });
             }, error: err => {
               if (err.status === 400) {
-                this.appService.customError(err.error);
+                this.toastService.customError(err.error);
               }
               else {
-                this.appService.customError('Something went wrong!');
+                this.toastService.customError('Something went wrong!');
               }
             }
           })
@@ -220,10 +220,10 @@ export class BranchEditComponent implements OnInit, AfterViewInit {
         reject: (type) => {
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.appService.rejected();
+              this.toastService.rejected();
               break;
             case ConfirmEventType.CANCEL:
-              this.appService.cancelled();
+              this.toastService.cancelled();
               break;
           }
         }

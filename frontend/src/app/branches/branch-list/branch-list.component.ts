@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Branch } from '../branch.model';
 import { BranchService } from '../branch.service';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrl: './branch-list.component.css'
 })
 export class BranchListComponent {
+  search: string = "";
 
   constructor(public branchService: BranchService, private router: Router) { }
 
@@ -27,5 +26,23 @@ export class BranchListComponent {
       return true;
     }
     return false;
+  }
+
+  isPrefix(str: string) {
+    var temp = this.search.toUpperCase();
+    if (temp.length > str.length)
+      return false;
+    var i = 0;
+    while (i < temp.length && temp.charAt(i) === str.charAt(i))
+      i++;
+    if (i < temp.length)
+      return false;
+    return true;
+  }
+
+  isAnyBranchPrefix() {
+    if (this.branchService === undefined || this.branchService.branches === undefined)
+      return true;
+    return this.branchService.branches.some(branch => this.isPrefix(branch.buCode));
   }
 }

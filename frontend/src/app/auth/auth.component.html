@@ -33,12 +33,14 @@
                 <p-password type="password" id="password" [toggleMask]="true" [feedback]="!isLoginMode && !user"
                     class="text-base text-color surface-overlay w-full" ngModel name="password" required
                     [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" minlength="6"></p-password>
+                <small *ngIf="!isLoginMode && !user">Minimum 6 characters</small>
             </div>
             <div class="field" style="display: flex; flex-direction: column;" *ngIf="user">
                 <label for="newPassword">New Password</label>
                 <p-password type="password" id="newPassword" [toggleMask]="true"
                     class="text-base text-color surface-overlay w-full" ngModel name="newPassword" required
                     [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" minlength="6"></p-password>
+                <small>Minimum 6 characters</small>
             </div>
             <div class="field" style="display: flex; flex-direction: column;" *ngIf="user">
                 <label for="confirmNewPassword">Confirm New Password</label>

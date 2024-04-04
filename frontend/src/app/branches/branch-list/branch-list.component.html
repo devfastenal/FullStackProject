@@ -1,28 +1,42 @@
-<p-scrollPanel [style]="{ width: '100%', height: '70vh' }">
+<span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input type="text" pInputText class="p-inputtext-sm" value="search" placeholder="Search for BU Code"
+        [(ngModel)]="search" />
+</span>
+<br>
+<br>
+<p-scrollPanel [style]="{ width: '100%', height: '65vh' }">
     <div *ngFor="let branch of branchService.branches; let id=index;">
-        <div *ngIf="isActive(branch.buCode)">
-            <p-fieldset legend="{{id+1}}" [routerLink]="[branch.buCode]" styleClass="active"
+        <div *ngIf="isPrefix(branch.buCode) && isActive(branch.buCode)">
+            <p-fieldset legend="{{branch.status=='Close' ? 'Inactive' : 'Active'}}" [routerLink]="[branch.buCode]"
+                styleClass="active" [style]="{ cursor: 'pointer' }">
+                <p class="m-0">
+                    <b>BU Code</b> : {{branch.buCode | uppercase}}
+                </p>
+            </p-fieldset>
+            <br>
+        </div>
+        <div *ngIf="isPrefix(branch.buCode) && !isActive(branch.buCode) && !isStatusClose(branch.status)">
+            <p-fieldset legend="Active" [routerLink]="[branch.buCode]" [style]="{ cursor: 'pointer' }">
+                <p class="m-0">
+                    <b>BU Code</b> : {{branch.buCode | uppercase}}
+                </p>
+            </p-fieldset>
+            <br>
+        </div>
+        <div *ngIf="isPrefix(branch.buCode) && !isActive(branch.buCode) && isStatusClose(branch.status)">
+            <p-fieldset legend="Inactive" [routerLink]="[branch.buCode]" styleClass="notActive"
                 [style]="{ cursor: 'pointer' }">
                 <p class="m-0">
                     <b>BU Code</b> : {{branch.buCode | uppercase}}
                 </p>
             </p-fieldset>
+            <br>
         </div>
-        <div *ngIf="!isActive(branch.buCode) && !isStatusClose(branch.status)">
-            <p-fieldset legend="{{id+1}}" [routerLink]="[branch.buCode]" [style]="{ cursor: 'pointer' }">
-                <p class="m-0">
-                    <b>BU Code</b> : {{branch.buCode | uppercase}}
-                </p>
-            </p-fieldset>
-        </div>
-        <div *ngIf="!isActive(branch.buCode) && isStatusClose(branch.status)">
-            <p-fieldset legend="{{id+1}}" [routerLink]="[branch.buCode]" styleClass="notActive"
-                [style]="{ cursor: 'pointer' }">
-                <p class="m-0">
-                    <b>BU Code</b> : {{branch.buCode | uppercase}}
-                </p>
-            </p-fieldset>
-        </div>
+    </div>
+    <div *ngIf="!isAnyBranchPrefix()"
+        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
         <br>
+        No such BU Code currently exists
     </div>
 </p-scrollPanel>

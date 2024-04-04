@@ -4,7 +4,7 @@ import { CitiesService } from '../../shared-sources/cities-service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AppComponent } from '../../app.component';
+import { ToastService } from '../../shared-sources/toast-service';
 
 @Component({
   selector: 'app-cities-detailed-view',
@@ -17,7 +17,7 @@ export class CitiesDetailedViewComponent implements OnInit {
   city: CityDetail;
   cities: CityDetail[] = [];
 
-  constructor(private appservice: AppComponent, private service: CitiesService, private router: Router, private activeroute: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor(private toastService: ToastService, private service: CitiesService, private router: Router, private activeroute: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MessageService) {
   }
   ngOnInit(): void {
 
@@ -45,25 +45,25 @@ export class CitiesDetailedViewComponent implements OnInit {
             } else {
               console.error("City with ID", id, "not found in the list.");
             }
-            this.appservice.deletedToast();
+            this.toastService.deletedToast();
             this.router.navigate(['../',], { relativeTo: this.activeroute });
           },
           error: err => {
             if (err.status === 403)
-              this.appservice.customError('You are not an admin');
+              this.toastService.customError('You are not an admin');
             else
-              this.appservice.customError('Something went wrong');
+              this.toastService.customError('Something went wrong');
           }
         });
       },
       reject: (type) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.appservice.rejected();
+            this.toastService.rejected();
 
             break;
           case ConfirmEventType.CANCEL:
-            this.appservice.cancelled();
+            this.toastService.cancelled();
 
             break;
         }

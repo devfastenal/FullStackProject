@@ -10,7 +10,7 @@ import { Subscription, exhaustMap, take } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   isUser = false;
   sub: Subscription;
-  constructor(private authService: AuthService, private msgservice: MessageService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -25,34 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
-  }
-  addedToast() {
-    this.msgservice.add({ severity: 'success', summary: 'Success', detail: 'Added Successfully' });
-  }
-  deletedToast() {
-    this.msgservice.add({ severity: 'success', summary: 'Success', detail: 'Deleted Successfully' });
-
-  }
-  updateToast() {
-    this.msgservice.add({ severity: 'success', summary: 'Success', detail: 'Updated Successfully' });
-  }
-  cancelled() {
-    this.msgservice.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
-  }
-  rejected() {
-    this.msgservice.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
-  }
-  errorWhileAdd() {
-    this.msgservice.add({ severity: 'error', summary: 'Error', detail: 'Error Occured While Adding' });
-  }
-  updateError() {
-    this.msgservice.add({ severity: 'error', summary: 'Error', detail: 'Error Occured While Updating' });
-  }
-  customError(message: string) {
-    this.msgservice.add({ severity: 'error', summary: 'Error', detail: message });
-  }
-  customSuccess(message: string) {
-    this.msgservice.add({ severity: 'success', summary: 'Success', detail: message });
   }
 }
 

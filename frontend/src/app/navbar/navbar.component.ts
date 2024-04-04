@@ -3,7 +3,7 @@ import { ConfirmEventType, ConfirmationService, MenuItem } from 'primeng/api';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AppComponent } from '../app.component';
+import { ToastService } from '../shared-sources/toast-service';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ];
   sub: Subscription;
   user: any;
-  constructor(private appService: AppComponent, private confirmationService: ConfirmationService, private router: Router, private authService: AuthService) { }
+  constructor(private toastService: ToastService, private confirmationService: ConfirmationService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.sub = this.authService.user.subscribe(user => {
@@ -50,15 +50,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.authService.logout();
+        this.toastService.customSuccess("Logged Out Succesfully");
       },
       reject: (type) => {
         switch (type) {
           case ConfirmEventType.REJECT:
-            this.appService.rejected();
+            this.toastService.rejected();
 
             break;
           case ConfirmEventType.CANCEL:
-            this.appService.cancelled();
+            this.toastService.cancelled();
             break;
         }
       }

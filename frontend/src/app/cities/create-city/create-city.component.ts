@@ -3,9 +3,8 @@ import { CitiesService } from '../../shared-sources/cities-service';
 import { CityDetail } from '../../shared-sources/cities-model';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ConfirmationService, ConfirmEventType, Message, PrimeNGConfig } from 'primeng/api';
-import { AppComponent } from '../../app.component';
+import { ToastService } from '../../shared-sources/toast-service';
 
 @Component({
   selector: 'app-create-city',
@@ -22,7 +21,7 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
   //  tempcity:CityDetail;
   editMode = false;
   //  tempcity:CityDetail;
-  constructor(private appservice: AppComponent, public service: CitiesService, private router: Router, private activeroute: ActivatedRoute, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
+  constructor(private toastService: ToastService, public service: CitiesService, private router: Router, private activeroute: ActivatedRoute, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
   ngOnInit() {
     //  this.service.startedediting.subscribe((tempcity:CityDetail)=>{
     //   this.editMode=true;
@@ -64,11 +63,11 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
               tempCity['cityName'] = tempCity['cityName'].toUpperCase();
               const index = this.service.list.findIndex(x => x.cityId === this.id);
               this.service.list[index] = tempCity;
-              this.appservice.updateToast();
+              this.toastService.updateToast();
               this.router.navigate(['../'], { relativeTo: this.activeroute })
             },
             error: err => {
-              this.appservice.errorWhileAdd();
+              this.toastService.errorWhileAdd();
             }
           });
 
@@ -76,10 +75,10 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
         reject: (type) => {
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.appservice.rejected();
+              this.toastService.rejected();
               break;
             case ConfirmEventType.CANCEL:
-              this.appservice.cancelled();
+              this.toastService.cancelled();
               break;
           }
         }
@@ -102,12 +101,12 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
               });;
               this.tempform.form.reset();
               this.router.navigate(['../'], { relativeTo: this.activeroute });
-              this.appservice.addedToast();
+              this.toastService.addedToast();
 
             },
             error: err => {
               console.log(err)
-              this.appservice.errorWhileAdd();
+              this.toastService.errorWhileAdd();
             }
           });
         },
@@ -115,10 +114,10 @@ export class CreateCityComponent implements OnInit, AfterViewInit {
 
           switch (type) {
             case ConfirmEventType.REJECT:
-              this.appservice.rejected();
+              this.toastService.rejected();
               break;
             case ConfirmEventType.CANCEL:
-              this.appservice.cancelled();
+              this.toastService.cancelled();
               break;
           }
         }
